@@ -1,0 +1,105 @@
+.introduction-bg_img {
+  background-image: url("https://cdn.kwork.com/images/index/banner-bg-front.jpg?v=2");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.item_center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.image_box {
+  width: 14.5rem;
+  height: 10rem;
+}
+
+.image_box {
+  background-size: 100%;
+  background-position: center;
+  transition: all 400ms;
+}
+
+.image_box::after {
+  position: absolute;
+  content: '';
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.image_box:hover {
+  background-size: 105%;
+}
+
+.image_box:hover::after {
+  opacity: 0.2;
+}
+
+.kw_wrapper {
+  background-image: url("https://cdn.kwork.com/images/index/banner-bg-bottom.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.info_modal_box {
+  width: 28rem;
+  text-align: start;
+  top: 0rem;
+}
+
+.info_modal {
+  text-align: start;
+  box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.205);
+}
+
+.show_animation {
+  transform: scale(1);
+  opacity: 1;
+  transform: translateX(-50%);
+  animation: show_animation 500ms;
+}
+
+@keyframes show_animation {
+  from {
+    top: -2rem;
+    left: -14rem;
+    transform: scale(0.7);
+    opacity: 0.4;
+  }
+
+  to {
+    top: 0;
+    left: -14rem;
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.hidden_animation {
+  left: -14rem;
+  opacity: 0;
+  transform: scale(0.7);
+  pointer-events: none;
+  animation: hidden_animation 500ms;
+}
+
+@keyframes hidden_animation {
+  from {
+    top: 0;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    top: -2rem;
+    opacity: 0;
+    transform: scale(0.7);
+  }
+}
