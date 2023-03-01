@@ -3,10 +3,10 @@ import React from 'react'
 export default function Footer() {
   return (
     <div>
-      <div className='container mx-auto flex justify-between border-b-2 pb-10'>
-        <div className='text-2xl font-bold'>KWORK</div>
+      <div className='container mx-auto flex justify-between border-b-2 pb-10 max-sm:text-xs max-md:flex-col max-md:text-center'>
+        <div className='text-2xl font-bold max-md:mb-2 max-md:mt-4'>KWORK</div>
 
-        <div>
+        <div className='max-md:mb-4'>
           <h3 className='text-lg font-medium mb-2'>About</h3>
           <ul>
             <li className='hover:text-blue-400 cursor-pointer text-gray-600 mb-2'>About Kwork</li>
@@ -16,7 +16,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        <div>
+        <div className='max-md:mb-4'>
           <h3 className='text-lg font-medium mb-2'>Resources</h3>
           <ul>
             <li className='hover:text-blue-400 cursor-pointer text-gray-600 mb-2'>For Freelancers</li>
@@ -28,7 +28,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        <div>
+        <div className='max-md:mb-4'>
           <h3 className='text-lg font-medium mb-2'>Help Center</h3>
           <ul>
             <li className='hover:text-blue-400 cursor-pointer text-gray-600 mb-2'>Prohibited Services</li>
@@ -39,12 +39,12 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className='container mx-auto mt-8 flex justify-between pb-10'>
+      <div className='container mx-auto mt-8 flex justify-between pb-10 text-sm max-sm:text-xs'>
         <ul>
-          <li className='text-sm text-gray-500'>2015 - 2022 Kwork ©</li>
-          <li className='text-sm text-gray-500'>Paperjet Technologies Ltd.</li>
-          <li className='text-sm text-gray-500'>Pythagora 3, PYTHAGORAS COURT,</li>
-          <li className='text-sm text-gray-500'>Flat/Office 102, 3027, Limassol, Cyprus</li>
+          <li className='text-gray-500'>2015 - 2022 Kwork ©</li>
+          <li className='text-gray-500'>Paperjet Technologies Ltd.</li>
+          <li className='text-gray-500'>Pythagora 3, PYTHAGORAS COURT,</li>
+          <li className='text-gray-500'>Flat/Office 102, 3027, Limassol, Cyprus</li>
         </ul>
 
         <div className='flex items-end'>

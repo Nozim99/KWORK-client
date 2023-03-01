@@ -1,9 +1,14 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMagnifyingGlass, faPlay, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { faCircleQuestion } from "@fortawesome/free-regular-svg-icons"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import { useDispatch } from 'react-redux';
+import { setSignup } from "../redux/slices/config";
 
 export default function Introduction() {
+	const dispatch = useDispatch()
+
+	const [isWorked, setIsWorked] = useState(true)
 	const [activeKworks, setActiveKworks] = useState(0) //91814
 	const [newKworksThisWeek, setNewKworksThisWeek] = useState(0) //2240
 	const [newBuyersThisWeek, setNewBuyersThisWeek] = useState(0) //2684
@@ -11,7 +16,11 @@ export default function Introduction() {
 	const [infoModal, setInfoModal] = useState(false)
 	const [search, setSearch] = useState("")
 
-	useEffect(() => {
+	const myRef = useRef<HTMLDivElement>(null)
+	const [scrollHeight, setScrollHeight] = useState<number>(0);
+
+	const statusNumbers = () => {
+		setIsWorked(true)
 		let i = 0;
 		let n = 0;
 		let m = 0;
@@ -45,39 +54,65 @@ export default function Introduction() {
 				}
 			}, 1)
 		}, 1000)
+	}
+
+	useEffect(() => {
+		const observer = new IntersectionObserver(
+			([entry], observer) => {
+				if (entry.isIntersecting) {
+					if (myRef.current && observer) {
+						observer.unobserve(myRef.current);
+					}
+					// Run your function here
+					statusNumbers()
+				}
+			},
+			{ threshold: 0 } // Trigger when the element is in view
+		);
+
+		if (myRef.current) {
+			observer.observe(myRef.current);
+		}
+
+		return () => {
+			if (myRef.current && observer) {
+				observer.unobserve(myRef.current);
+			}
+		};
 	}, []);
 
 	return (
 		<div>
+
 			{/* Buy affordable freelance serviceson the go */}
-			<div className='introduction-bg_img bg-gray-300 h-96 relative'>
-				<div className='absolute w-full h-full backdrop-blur bg-white/10'></div>
+			<div className='introduction-bg_img h-96 relative'>
+				<div className='absolute w-full h-full backdrop-blur bg-white/10 max-sm:hidden'></div>
 				<div className='absolute w-full h-full'>
-					<div className='h-full flex items-center justify-between container mx-auto'>
+					<div className='h-full flex items-center justify-between container mx-auto max-sm:justify-center'>
 						<div className=''>
-							<h3 className='text-4xl font-medium'>
+							<h3 className='text-4xl font-medium max-md:text-2xl max-sm:text-center text_small'>
 								Buy affordable freelance services <br />
 								on the go
 							</h3>
 							<div className="mt-5 relative flex items-center">
-								<FontAwesomeIcon className="text-gray-500 left-3 top-3.5 text-lg absolute pointer-events-none" icon={faMagnifyingGlass} />
-								<input value={search} onChange={(e) => setSearch(e.target.value)} type="text" className='outline-none py-2 text-lg pl-12 w-96 pr-10 rounded-l border border-gray-400 border-r-0' placeholder='Try "social media design"' />
-								<FontAwesomeIcon onClick={(() => setSearch(""))} className={"text-gray-500 text-2xl relative right-7 " + (search ? "opacity-100 cursor-pointer" : "opacity-0 pointer-events-none")} icon={faXmark} />
-								<button className="bg-[#04B70A] text-white py-2 text-lg relative right-3.5 rounded-r px-5 hover:bg-green-500 border border-gray-400 border-l-0">Qidirish</button>
+								<FontAwesomeIcon className="text-gray-500 left-3 top-3.5 text-lg absolute pointer-events-none max-md:text-base max-md:top-2.5" icon={faMagnifyingGlass} />
+								<input value={search} onChange={(e) => setSearch(e.target.value)} type="text" className='outline-none py-2 text-lg pl-12 w-96 pr-10 rounded-l border border-gray-400 border-r-0 max-md:w-72 max-md:text-sm' placeholder='Try "social media design"' />
+								<FontAwesomeIcon onClick={(() => setSearch(""))} className={"text-gray-500 text-2xl relative right-7 max-md:text-lg " + (search ? "opacity-100 cursor-pointer" : "opacity-0 pointer-events-none")} icon={faXmark} />
+								<button className="bg-[#04B70A] text-white py-2 text-lg relative right-3.5 rounded-r px-5 hover:bg-green-500 border border-gray-400 border-l-0 max-md:text-sm">Qidirish</button>
 							</div>
 						</div>
-						<div className="mr-40 relative">
-							<img className="w-64" src="https://pngimg.com/uploads/girls/girls_PNG6492.png" alt="" />
-							<div className="absolute bottom-2 text-white font-bold text-xl bg-black/20 w-64 text-center rounded py-1 backdrop-blur-sm">Lilith, Web Developer</div>
+						<div className="mr-40 relative max-md:mr-4 max-lg:mr-10 max-sm:hidden">
+							<img className="w-64 max-md:w-40 max-lg:w-52" src="https://pngimg.com/uploads/girls/girls_PNG6492.png" alt="" />
+							<div className="overflow-hidden absolute bottom-2 text-white font-bold text-xl bg-black/20 w-64 text-center rounded py-1 backdrop-blur-sm max-lg:w-52 max-lg:text-lg max-md:w-36 max-md:text-sm">Lilith, Web Developer</div>
 						</div>
 					</div>
 				</div>
 			</div>
 
 			{/* Explore Kwork's Evergrowing Marketplace */}
-			<div className="container mx-auto my-14">
+			<div className="container mx-auto my-14 categories_img">
 				<h1 className="text-3xl font-medium mb-6">Explore Kwork's Evergrowing Marketplace</h1>
-				<div className="">
+				<div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2">
 					<div style={{ backgroundImage: "url('https://cdn.kwork.com/files/category/collage/categories_first_level/en/t4/seo_guest.webp?ver=1615534300')" }} className="relative image_box cursor-pointer mr-8 inline-block mb-5"></div>
 					<div style={{ backgroundImage: "url('https://cdn.kwork.com/files/category/collage/categories_first_level/en/t4/reklama-pr_guest.webp?ver=1628520228')" }} className="relative image_box cursor-pointer mr-8 inline-block mb-5"></div>
 					<div style={{ backgroundImage: "url('https://cdn.kwork.com/files/category/collage/categories_first_level/en/t4/programming_guest.webp?ver=1615534237')" }} className="relative image_box cursor-pointer mr-8 inline-block mb-5"></div>
@@ -89,45 +124,45 @@ export default function Introduction() {
 			</div>
 
 			{/* Status numbers */}
-			<div className="container mx-auto flex border py-6 rounded-xl border-gray-300 shadow-lg mb-20">
-				<div className="w-1/4 text-center">
-					<div className="text-5xl font-bold mb-2">KWORK</div>
+			<div className="container mx-auto grid grid-cols-4 max-lg:grid-cols-2 border py-6 rounded-xl border-gray-300 shadow-lg mb-20">
+				<div ref={myRef} className="text-center max-lg:mb-10">
+					<div className="text-5xl font-bold mb-2 max-md:text-4xl">KWORK</div>
 					<div className="text-sm text-gray-600 flex items-center justify-center">Freelance Marketplace
 						<div className="relative">
 							<FontAwesomeIcon onMouseEnter={() => setInfoModal(true)} className="text-[#BBBBBB] text-lg ml-1" icon={faCircleQuestion} />
 
-							<div onMouseLeave={() => setInfoModal(false)} className={"absolute info_modal_box pt-6 " + (infoModal ? "show_animation" : "hidden_animation")}>
+							{/* <div onMouseLeave={() => setInfoModal(false)} className={"absolute info_modal_box pt-6 " + (infoModal ? "show_animation" : "hidden_animation")}>
 								<div className="info_modal border rounded-lg bg-white px-4 py-2">
 									Kwork is the new platform taking the freelancing world by storm. <br />
 									Shop with confidence with our 100% Money Back Guarantee and <br />
 									smart freelancer rating system. Get started for free on Kwork now: <br />
 									shopping for freelance services has never been easier.
 								</div>
-							</div>
+							</div> */}
 
 						</div>
 					</div>
 				</div>
-				<div className="w-1/4 text-center border-x border-gray-300">
-					<div className="text-blue-600 text-5xl font-medium mb-2">{activeKworks.toLocaleString()}</div>
+				<div className="text-center border-x border-gray-300 max-lg:mb-10 max-lg:border-r-0">
+					<div className="text-blue-600 text-5xl font-medium mb-2 max-md:text-4xl">{activeKworks.toLocaleString()}</div>
 					<div className="text-sm text-gray-600">active kworks</div>
 				</div>
-				<div className="w-1/4 text-center border-r border-gray-300">
-					<div className="text-blue-600 text-5xl font-medium mb-2">{newKworksThisWeek.toLocaleString()}</div>
+				<div className="text-center border-r border-gray-300">
+					<div className="text-blue-600 text-5xl font-medium mb-2 max-md:text-4xl">{newKworksThisWeek.toLocaleString()}</div>
 					<div className="text-sm text-gray-600">new kworks <br /> this week</div>
 				</div>
-				<div className="w-1/4 text-center">
-					<div className="text-blue-600 text-5xl font-medium mb-2">{newBuyersThisWeek.toLocaleString()}</div>
+				<div className="text-center">
+					<div className="text-blue-600 text-5xl font-medium mb-2 max-md:text-4xl">{newBuyersThisWeek.toLocaleString()}</div>
 					<div className="text-sm text-gray-600">new buyers <br /> this week</div>
 				</div>
 			</div>
 
 			{/* Discover how easy it is to get things done */}
-			<div className="bg-[#F4F8FD] mb-20">
+			<div className="bg-[#F4F8FD] mb-20 max-lg:text-center max-lg:text-center">
 				<div className="container mx-auto py-10">
 					<h3 className="text-3xl font-medium">Discover how easy it is to get things done</h3>
 					<p className="mt-1">Perfect for your personal and business goals!</p>
-					<div className="flex mt-16">
+					<div className="grid grid-cols-3 gap-5 max-lg:grid-cols-1 max-lg:grid-cols-1 mt-16">
 						<div className="text-center">
 							<div className="bg-white rounded-full p-5 border-2 border-blue-300 inline-block relative w-32 h-32">
 								<img className="absolute item_center" src="https://cdn.kwork.com/images/index/steps-choose.svg" alt="" />
@@ -135,7 +170,7 @@ export default function Introduction() {
 							<div className="text-xl font-medium mb-3">Find a freelancer</div>
 							<div>Explore thousands of professional services for every budget.</div>
 						</div>
-						<div className="text-center mx-40">
+						<div className="text-center max-lg:my-14">
 							<div className="bg-white rounded-full p-5 border-2 border-blue-300 inline-block relative w-32 h-32">
 								<img className="absolute item_center" src="https://cdn.kwork.com/images/index/steps-pay-en.svg" alt="" />
 							</div>
@@ -154,8 +189,8 @@ export default function Introduction() {
 			</div>
 
 			{/* Intelligent business solutions for entrepreneurs */}
-			<div className="container mx-auto mb-20 flex justify-between">
-				<div className="w-2/4">
+			<div className="container mx-auto mb-20 flex justify-between max-md:flex-col">
+				<div className="w-2/4 max-md:w-full">
 					<h1 className="font-medium text-2xl">Intelligent business solutions for entrepreneurs</h1>
 
 					<div className="flex items-start my-8">
@@ -183,22 +218,22 @@ export default function Introduction() {
 					</div>
 				</div>
 
-				<iframe className="w-2/4" src="https://www.youtube.com/embed/l1bCVNCH0jc" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+				<iframe className="w-2/4 max-md:w-full max-md:h-96 max-md:mt-10" src="https://www.youtube.com/embed/l1bCVNCH0jc" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
 			</div>
 
 			{/* Start saving with freelance services today */}
 			<div className="text-center mb-20 kw_wrapper py-16">
 				<h1 className="text-3xl font-medium mb-2">Start saving with freelance services today</h1>
 				<h3 className="text-xl text-neutral-800 font-medium">Speed, quality, and affordability: you can have it all!</h3>
-				<button className="bg-[#04B70A] hover:bg-green-500 text-white px-32 mt-14 py-2 rounded">Sign up for Free</button>
+				<button onClick={() => dispatch(setSignup(true))} className="bg-[#04B70A] hover:bg-green-500 text-white px-32 mt-14 py-2 rounded">Sign up for Free</button>
 			</div>
 
 			{/* KWORK Freelance Marketplace */}
 			<div className="container mx-auto mb-20">
 				<h1 className="text-3xl font-medium"><span className="font-bold mr-1">KWORK</span> Freelance Marketplace</h1>
 				<h3 className="mb-10">Getting things done has never been easier.</h3>
-				<div className="flex justify-between text-sm">
-					<div className="w-2/4 pr-4">
+				<div className="grid grid-cols-2 gap-5 text-sm max-lg:grid-cols-1">
+					<div className="lg:mb-4">
 						<p><b>Want to save time and money without compromising on quality?</b> That's what we’re here for.</p><br />
 
 						<p>We built Kwork to help independent and results-oriented entrepreneurs like you find talented freelancers for all your business needs.</p><br />
@@ -211,7 +246,7 @@ export default function Introduction() {
 
 						Why wait? Get things done today!
 					</div>
-					<div className="w-2/4 pl-4">
+					<div>
 						<p><b>Have a unique job, or too busy to browse for freelancers?</b> Post a buyer request in our tailor-made Exchange section!</p><br />
 
 						<p>Just provide a description, delivery time, and budget. Kwork's seasoned freelancers will send in bespoke offers customized to your task. Best suited for complex or large projects.</p><br />

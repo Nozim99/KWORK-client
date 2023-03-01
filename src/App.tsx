@@ -3,6 +3,8 @@ import './App.css'
 import Navbar from './components/Navbar'
 import Introduction from './components/Introduction'
 import Footer from './components/Footer'
+import { Route, Routes } from 'react-router-dom'
+import Seller from './components/Seller'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -10,7 +12,10 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      <Introduction />
+      <Routes>
+        <Route path='/' element={<Introduction />} />
+        <Route path='/seller' element={<Seller />} />
+      </Routes>
       <Footer />
     </div>
   )

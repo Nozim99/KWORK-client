@@ -63,7 +63,7 @@
   transform: scale(1);
   opacity: 1;
   transform: translateX(-50%);
-  animation: show_animation 500ms;
+  animation: show_animation 200ms;
 }
 
 @keyframes show_animation {
@@ -87,7 +87,7 @@
   opacity: 0;
   transform: scale(0.7);
   pointer-events: none;
-  animation: hidden_animation 500ms;
+  animation: hidden_animation 200ms;
 }
 
 @keyframes hidden_animation {
@@ -101,5 +101,33 @@
     top: -2rem;
     opacity: 0;
     transform: scale(0.7);
+  }
+}
+
+@media (max-width: 740px) {
+  .login_page {
+    top: 0;
+    left: 0;
+    transform: translate(0, 0);
+    width: 100% !important;
+    height: 100%;
+  }
+}
+
+@media (max-width: 639px) {
+  .introduction-bg_img {
+    background: #F4F8FD;
+  }
+}
+
+@media (max-width: 480px) {
+  .categories_img div {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    margin: auto;
+    margin-bottom: 2rem;
+  }
+
+  .text_small {
+    font-size: 1.4rem !important;
   }
 }
