@@ -3,7 +3,7 @@ import React from 'react'
 export default function Footer() {
   return (
     <div>
-      <div className='container mx-auto flex justify-between border-b-2 pb-10 max-sm:text-xs max-md:flex-col max-md:text-center'>
+      <div className='container mx-auto flex justify-between border-b-2 pb-10 max-sm:text-xs max-md:flex-col max-md:text-center pt-6'>
         <div className='text-2xl font-bold max-md:mb-2 max-md:mt-4'>KWORK</div>
 
         <div className='max-md:mb-4'>
